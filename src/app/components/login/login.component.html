@@ -1,16 +1,31 @@
-<div>
-    <div>Login !!!</div>
-    <div>
-        <form [formGroup]="loginForm">
+<div class="main-wrapper">
+    <div class="head" *ngIf="page=='login'">Login !!!</div>
+    <div class="head" *ngIf="page=='register'">Sign up !!!</div>
+    <div class="form">
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <div class="form-group">
                 <label>Email</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" formControlName="email">
+                <div class="alert alert-danger error-div" *ngIf="loginForm.controls.email.dirty && loginForm.controls.email.errors">
+                    <span *ngIf="loginForm.controls.email.errors.required">Email Required</span>
+                    <span *ngIf="loginForm.controls.email.errors.email">Please enter the correct email </span>
+                </div>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" formControlName="password">
+                <div class="alert alert-danger error-div" *ngIf="loginForm.controls.password.dirty && loginForm.controls.password.errors">
+                        <span *ngIf="loginForm.controls.password.errors.required">Password Required</span>
+                        <span *ngIf="loginForm.controls.password.errors.minlength">Password should be minimum of 6 characters </span>
+                    </div>
             </div>
+            <div class="form-group footer">
+                    <div class="submit"><button class="btn btn-primary" [class.disabled]="loginForm.invalid">Submit</button></div>
+                    <div class="account pointer">
+                        <a *ngIf="page=='register'" (click)="page='login';loginForm.reset()">Already have an account account</a>
+                        <a *ngIf="page=='login'" (click)="page='register';loginForm.reset()">Create account</a>
+                    </div>
+                </div>
         </form>
     </div>
-    <div></div>
 </div>

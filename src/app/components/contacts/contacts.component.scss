@@ -1,0 +1,26 @@
+.user {
+    border: 1px solid silver;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+
+    .top {
+       display: flex;
+
+       .avatar {
+        border: 1px solid blue;
+        border-radius: 30px;
+        padding: 22px;
+        font-size: 22px;
+       }
+       .name {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        padding-left: 28px;
+        font-size: 20px;
+       }
+    }
+}
