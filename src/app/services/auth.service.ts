@@ -45,4 +45,8 @@ export class AuthService {
   getMessage() {
     return this.db.collection('messages', ref => ref.orderBy('date', 'asc')).snapshotChanges();
   }
+
+  getRecentMessage() {
+    return this.db.collection('messages', ref => ref.orderBy('date', 'asc')).stateChanges();
+  }
 }

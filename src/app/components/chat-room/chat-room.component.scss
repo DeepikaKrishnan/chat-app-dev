@@ -4,5 +4,20 @@
 }
 nb-chat {
     width: 100%;
-    height: 80% !important;
+    //height: 46rem !important;
+   // height: 80% !important;
+}
+::ng-deep nb-layout-column {
+    justify-content: center;
+    display: flex;
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    .logout {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-bottom: 13px;
+    }
 }
