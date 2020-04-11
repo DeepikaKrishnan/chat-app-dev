@@ -17,7 +17,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
   receiverData: any;
   rec: any;
   constructor(private auth: AuthService, private route: Router, private activate: ActivatedRoute, private dp:DatePipe) {
-    var myNotification = new Notification('hai');
    }
 
   ngOnInit(): void {
@@ -85,10 +84,37 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
           };
           return data;
         });
+
+        newData.map((x) => {
+          if (x.type == 'text') {
+            this.sendNotification(x.text);
+          } else {
+            this.sendNotification('New file/image received');
+          }
+        });
+
         this.messages.push(...newData);
       }
       this.sub.push(rsub);
     })
+  }
+
+  sendNotification(text) {
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    }
+  
+    else if ((Notification as any).permission === "granted") {
+      var notification = new Notification(text);
+    }
+
+    else if ((Notification as any).permission !== "denied") {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+          var notification = new Notification(text);
+        }
+      });
+    }
   }
   
 
