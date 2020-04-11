@@ -13,6 +13,7 @@ import { NbThemeModule, NbLayoutModule, NbChatModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { DatePipe } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DatePipe } from '@angular/common';
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
-    NbChatModule.forRoot()
+    NbChatModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -39,6 +39,7 @@ export class AuthService {
   }
 
   saveMessage(message) {
+    console.log('auth ervice',message);
     return this.db.collection('messages').add(message);
   }
 

@@ -17,6 +17,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
   receiverData: any;
   rec: any;
   constructor(private auth: AuthService, private route: Router, private activate: ActivatedRoute, private dp:DatePipe) {
+    var myNotification = new Notification('hai');
    }
 
   ngOnInit(): void {
@@ -94,7 +95,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
   sendMessage(event: any) {
     const files = !event.files ? [] : event.files.map((file) => {
       return {
-        url: file.src,
+        url: file.src || "",
         type: file.type,
         icon: 'file-text-outline',
       };
