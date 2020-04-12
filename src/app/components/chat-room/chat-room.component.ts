@@ -16,6 +16,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
   receiverId: any;
   receiverData: any;
   rec: any;
+  sub1: any;
   constructor(private auth: AuthService, private route: Router, private activate: ActivatedRoute, private dp:DatePipe) {
    }
 
@@ -36,7 +37,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
             this.senderData.name = this.senderData.email.split('@')[0];
           }
         }
-        this.getMessage();
+       // this.getMessage();
+       this.getRecentMessage();
       });
 
       //this.sub.push(rsub);
@@ -45,7 +47,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
   }
 
   getMessage() {
-    const sub1 = this.auth.getMessage().subscribe((r) => { 
+   this.sub1 = this.auth.getMessage().subscribe((r) => { 
       if(r && r.length) {
         const filteredData = r.filter((v) => {
           let data1: any;
@@ -62,7 +64,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
           return data;
         })
       }
-      sub1.unsubscribe();
+      this.sub1.unsubscribe();
+      
       this.getRecentMessage();
     });
   }
@@ -71,9 +74,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
    const rsub =  this.auth.getRecentMessage().subscribe((r) => {
       if(r && r.length) {
         const filteredData = r.filter((v: any) => {
-          let data1: any;
-          data1 = v.payload.doc.data();
-          return (data1.senderId == this.senderId || data1.receiverId == this.senderId) && (data1.receiverId == this.receiverId || data1.senderId == this.receiverId);
+          if (v.type == 'added') {
+            let data1: any;
+            data1 = v.payload.doc.data();
+            return (data1.senderId == this.senderId || data1.receiverId == this.senderId) && (data1.receiverId == this.receiverId || data1.senderId == this.receiverId);
+          }
         });
         const newData = filteredData.map((x: any) => {
           let data: any = {};
@@ -85,14 +90,17 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
           return data;
         });
 
-        newData.map((x) => {
-          if (x.type == 'text') {
-            this.sendNotification(x.text);
-          } else {
-            this.sendNotification('New file/image received');
+        const receiverData = r.filter((v: any) => { 
+          if (v.type == 'added') {
+            let data1: any;
+            data1 = v.payload.doc.data();
+            return (data1.receiverId == this.senderId);
           }
         });
 
+        receiverData.map((x)=> {
+          this.auth.updateRead(x.payload.doc.id);
+        })
         this.messages.push(...newData);
       }
       this.sub.push(rsub);
@@ -126,38 +134,18 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
         icon: 'file-text-outline',
       };
     });
-
-    /*this.messages.push({
-      text: event.message,
-      date: this.dp.transform(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-      reply: true,
-      type: files.length ? 'file' : 'text',
-      files: files,
-      user: {
-        name: this.senderData.email.split('@')[0]
-      },
-      senderId: this.senderId,
-      receiverId: this.receiverId
-    });*/
-
     this.saveMessage(event, files);
-
-    console.log(this.messages);
-    /*const botReply = this.chatShowcaseService.reply(event.message);
-    if (botReply) {
-      setTimeout(() => { this.messages.push(botReply) }, 500);
-    }*/
   }
 
   saveMessage(event, files) {
     const message = {
       text: event.message,
       date: this.dp.transform(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-      //reply: true,
       type: files.length ? 'file' : 'text',
       files: files,
       senderId: this.senderId,
-      receiverId: this.receiverId
+      receiverId: this.receiverId,
+      read: false
     };
     this.auth.saveMessage(message).then((x) => {
       

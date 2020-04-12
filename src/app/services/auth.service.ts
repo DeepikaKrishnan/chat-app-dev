@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   saveMessage(message) {
-    console.log('auth ervice',message);
+   // console.log('auth ervice',message);
     return this.db.collection('messages').add(message);
   }
 
@@ -49,5 +49,10 @@ export class AuthService {
 
   getRecentMessage() {
     return this.db.collection('messages', ref => ref.orderBy('date', 'asc')).stateChanges();
+  }
+
+  updateRead(id) {
+    console.log(id);
+    return this.db.collection('messages').doc(id).update({read: true});
   }
 }
