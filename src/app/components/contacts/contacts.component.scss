@@ -41,6 +41,11 @@
         align-items: center;
         font-size: 15px;
         font-weight: bold;
+        nb-badge {
+            position: relative;
+            font-size: 16px;
+            padding: 8px;
+        }
        }
     }
 }

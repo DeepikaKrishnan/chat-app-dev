@@ -6,7 +6,7 @@
             <div class="mg" *ngIf="user && user.lastMsg">{{user.lastMsg}}</div>
         </div>
         <div class="unread" *ngIf="user && user.unreadCnt">
-            {{user.unreadCnt}}
+            <nb-badge text="{{user.unreadCnt}}" position="right" status="success"></nb-badge>
         </div>
     </div>
 </div>

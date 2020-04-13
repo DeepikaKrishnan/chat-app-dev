@@ -68,7 +68,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
           if (user.msg && user.msg.length>0) {
             user.lastMsg =   user.msg[user.msg.length-1].type === 'file' ? 'Image' : user.msg[user.msg.length-1].text;
           }
-          console.log('user', user)
       });
       this.data.list.push(user);
       this.sub.push(rsub);

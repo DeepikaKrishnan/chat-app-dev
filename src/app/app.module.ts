@@ -9,7 +9,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { ChatRoomComponent } from './components/chat-room/chat-room.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbChatModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbChatModule, NbBadgeModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { DatePipe } from '@angular/common';
@@ -34,6 +34,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NbLayoutModule,
     NbEvaIconsModule,
     NbChatModule.forRoot(),
+    NbBadgeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [DatePipe],
