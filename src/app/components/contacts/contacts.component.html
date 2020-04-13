@@ -1,6 +1,12 @@
 <div class="user" *ngFor= "let user of users">
     <div class="top pointer" (click)="navigateToChat(user)">
         <div class="avatar">{{user.avatar | uppercase}}</div>
-        <div class="name">{{user.name | titlecase}}</div>
+        <div class="name">
+            <div class="title">{{user.name | titlecase}}</div>
+            <div class="mg" *ngIf="user && user.lastMsg">{{user.lastMsg}}</div>
+        </div>
+        <div class="unread" *ngIf="user && user.unreadCnt">
+            {{user.unreadCnt}}
+        </div>
     </div>
 </div>

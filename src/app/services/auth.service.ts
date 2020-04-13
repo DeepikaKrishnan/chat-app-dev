@@ -7,8 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   userId: any;
-
-  constructor(private db: AngularFirestore) { }
+  lastMsgData: any;
+  constructor(private db: AngularFirestore) { 
+    this.lastMsgData = {
+      msg: {},
+      unreadCnt: 0
+    }
+    console.log('auth contructor');
+  }
 
   doRegister(user) {
     return this.db.collection('user').add({
@@ -52,7 +58,6 @@ export class AuthService {
   }
 
   updateRead(id) {
-    console.log(id);
     return this.db.collection('messages').doc(id).update({read: true});
   }
 }

@@ -94,7 +94,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy  {
           if (v.type == 'added') {
             let data1: any;
             data1 = v.payload.doc.data();
-            return (data1.receiverId == this.senderId);
+            return (data1.receiverId == this.senderId && data1.senderId == this.receiverId);
           }
         });
 

@@ -22,9 +22,25 @@
        .name {
         justify-content: center;
         display: flex;
-        align-items: center;
+        //align-items: center;
         padding-left: 28px;
         font-size: 20px;
+        flex-direction: column;
+        flex-grow: 1;
+
+        .title {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        .mg {
+            font-size: 15px;
+        }
+       }
+       .unread {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        font-weight: bold;
        }
     }
 }
